@@ -8,7 +8,7 @@ This folder contains a bash script and other files listed below, which can be us
 - [deployment.template.json]() is a template the script uses to generate a [deployment manifest](https://docs.microsoft.com/azure/iot-edge/module-composition), which can be used for deploying Live Video Analytics on IoT Edge module (and others)
 
 
-You can get to the script via this redirect: https://aka.ms/lva-edge/setup-resources-for-samples
+You can get to the script via this redirect: <https://aka.ms/ava-edge/setup-resources-for-samples>
 
 ## Running the script
 
