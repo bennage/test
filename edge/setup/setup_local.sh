@@ -41,6 +41,7 @@ BYOD_DEPLOYMENT_MANIFEST_FILE="$BYOD_FOLDER/deployment.amd64.json"
 BYOD_ENV_FILE="$BYOD_FOLDER/.env"
 BYOD_APP_SETTINGS_FILE="$BYOD_FOLDER/appsettings.json"
 AVA_PROVISIONING_TOKEN=""
+AVA_DEPLOYMENT_MANIFEST_TEMPLATE_FILE="deployment.template.json"
 
 checkForError() {
     if [ $? -ne 0 ]; then
@@ -82,7 +83,7 @@ This overwrites any output files previously generated."
 mkdir -p $(dirname $ENV_FILE) && echo -n "" > $ENV_FILE
 mkdir -p $(dirname $APP_SETTINGS_FILE) && echo -n "" > $APP_SETTINGS_FILE
 mkdir -p $(dirname $VM_CREDENTIALS_FILE) && echo -n "" > $VM_CREDENTIALS_FILE
-# mkdir -p $(dirname $DEPLOYMENT_MANIFEST_FILE) && echo -n "" > $DEPLOYMENT_MANIFEST_FILE
+mkdir -p $(dirname $DEPLOYMENT_MANIFEST_FILE) && echo -n "" > $DEPLOYMENT_MANIFEST_FILE
 mkdir -p $(dirname $BYOD_ENV_FILE) && echo -n "" > $BYOD_ENV_FILE
 mkdir -p $(dirname $BYOD_APP_SETTINGS_FILE) && echo -n "" > $BYOD_APP_SETTINGS_FILE
 mkdir -p $(dirname $BYOD_DEPLOYMENT_MANIFEST_FILE) && echo -n "" > $BYOD_DEPLOYMENT_MANIFEST_FILE
@@ -276,6 +277,7 @@ fi
 
     # set up deployment manifest
     # curl -s $DEPLOYMENT_MANIFEST_URL > $DEPLOYMENT_MANIFEST_FILE
+    cp $AVA_DEPLOYMENT_MANIFEST_TEMPLATE_FILE $DEPLOYMENT_MANIFEST_FILE
 
     sed -i "s/\$AVA_PROVISIONING_TOKEN/$AVA_PROVISIONING_TOKEN/" $DEPLOYMENT_MANIFEST_FILE
     sed -i "s/\$CONTAINER_REGISTRY_USERNAME_myacr/$CONTAINER_REGISTRY_USERNAME/" $DEPLOYMENT_MANIFEST_FILE
