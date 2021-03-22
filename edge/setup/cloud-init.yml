@@ -45,21 +45,25 @@ runcmd:
         systemctl unmask iotedge
         systemctl start iotedge
 
-        mkdir /home/avaedgeuser/samples
-        mkdir /home/avaedgeuser/samples/input
-        mkdir /home/avaedgeuser/samples/output
+        sudo groupadd -g 1010 localusergroup
+        sudo useradd --home-dir /home/avaedgeuser --uid 1010 --gid 1010 avaedgeuser
+        sudo mkdir -p /home/avaedgeuser
+
+        sudo mkdir /home/avaedgeuser/samples
+        sudo mkdir /home/avaedgeuser/samples/input
+        sudo mkdir /home/avaedgeuser/samples/output
 
         curl https://lvamedia.blob.core.windows.net/public/camera-300s.mkv > /home/avaedgeuser/samples/input/camera-300s.mkv
         curl https://lvamedia.blob.core.windows.net/public/lots_284.mkv > /home/avaedgeuser/samples/input/lots_284.mkv
         curl https://lvamedia.blob.core.windows.net/public/lots_015.mkv > /home/avaedgeuser/samples/input/lots_015.mkv
         curl https://lvamedia.blob.core.windows.net/public/t2.mkv > /home/avaedgeuser/samples/input/t2.mkv
 
-        chown -R avaedgeuser /home/avaedgeuser/samples/
+        sudo chown -R avaedgeuser /home/avaedgeuser/samples/
 
-        mkdir /var/lib/videoanalyzer
-        mkdir /var/media
+        sudo mkdir /var/lib/videoanalyzer
+        sudo mkdir /var/media
 
-        chown -R avaedgeuser /var/lib/videoanalyzer
-        chown -R avaedgeuser /var/media
+        sudo chown -R avaedgeuser /var/lib/videoanalyzer
+        sudo chown -R avaedgeuser /var/media
 
       ) &
