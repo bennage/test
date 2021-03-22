@@ -24,7 +24,9 @@ ENV_FILE='edge-deployment/.env'
 APP_SETTINGS_FILE='appsettings.json'
 VM_CREDENTIALS_FILE='vm-edge-device-credentials.txt'
 ARM_TEMPLATE_URL="$BASE_URL/deploy.json"
+ARM_TEMPLATE_FILE="deploy.json"
 CLOUD_INIT_URL="$BASE_URL/cloud-init.yml"
+CLOUD_INIT_FILE='cloud-init.yml'
 DEPLOYMENT_MANIFEST_URL="$BASE_URL/deployment.template.json"
 DEPLOYMENT_MANIFEST_FILE='edge-deployment/deployment.amd64.json'
 RESOURCE_GROUP='ava-sample-resources'
@@ -140,14 +142,6 @@ else
     REGION=${DEFAULT_REGION}
 fi
 
-echo -e "
-Would you like to use your own edge device as an IoT edge device?
-If so enter ${YELLOW}Y${NC} otherwise ${YELLOW}N${NC}."
-read -p ">> " temp
-OWN_DEVICE=${temp^^}
- 
-##################################################################################################################################################  
-if [[ "$OWN_DEVICE" == "N" ]]; then
     # choose a resource group
     echo -e "
     ${YELLOW}What is the name of the resource group to use?${NC}
@@ -170,9 +164,10 @@ if [[ "$OWN_DEVICE" == "N" ]]; then
     This typically takes about 6 minutes, but the time may vary.
 
     The resources are defined in a template here:
-    ${BLUE}${ARM_TEMPLATE_URL}${NC}"
+	${BLUE}${ARM_TEMPLATE_FILE}${NC}"
 
-    az deployment group create --resource-group $RESOURCE_GROUP --template-uri $ARM_TEMPLATE_URL -o none
+# For local resource deployment file:
+	az deployment group create --resource-group $RESOURCE_GROUP --template-file $ARM_TEMPLATE_FILE -o none
     checkForError
 
     # query the resource group to see what has been deployed
@@ -210,7 +205,7 @@ if [[ "$OWN_DEVICE" == "N" ]]; then
     if [ $? -ne 0 ]; then
         echo -e "
     Finally, we'll deploy a VM that will act as your IoT Edge device for using the AVA samples."
-        curl -s $CLOUD_INIT_URL > $CLOUD_INIT_FILE
+        # curl -s $CLOUD_INIT_URL > $CLOUD_INIT_FILE
         # here be dragons
         # sometimes a / is present in the connection string and it breaks sed
         # this escapes the /
@@ -278,7 +273,7 @@ if [[ "$OWN_DEVICE" == "N" ]]; then
     echo -n "}" >> $APP_SETTINGS_FILE
 
     # set up deployment manifest
-    curl -s $DEPLOYMENT_MANIFEST_URL > $DEPLOYMENT_MANIFEST_FILE
+    # curl -s $DEPLOYMENT_MANIFEST_URL > $DEPLOYMENT_MANIFEST_FILE
 
     sed -i "s/\$CONTAINER_REGISTRY_USERNAME_myacr/$CONTAINER_REGISTRY_USERNAME/" $DEPLOYMENT_MANIFEST_FILE
     sed -i "s/\$CONTAINER_REGISTRY_PASSWORD_myacr/${CONTAINER_REGISTRY_PASSWORD//\//\\/}/" $DEPLOYMENT_MANIFEST_FILE
@@ -302,120 +297,11 @@ if [[ "$OWN_DEVICE" == "N" ]]; then
     Next, copy these generated files into your local copy of the sample app:
     - ${BLUE}${APP_SETTINGS_FILE}${NC}
     - ${BLUE}${ENV_FILE}${NC}
+    - ${BLUE}${DEPLOYMENT_MANIFEST_FILE}${NC}
 
     ${GREEN}All done!${NC} \U1F44D\n
-
-    Go to ${GREEN}https://aka.ms/lva-edge-quickstart${NC} to learn more about getting started with ${BLUE}Live Video Analytics${NC} on IoT Edge.					
+					
     "
-
-##################################################################################################################################################    
-
-elif [[ "$OWN_DEVICE" = "Y" ]]; then
-    # get edge device information
-    echo -e "\nWhat is the ${YELLOW}device ID${NC} of the Linux edge device that you want to use?"
-    read -p ">> " EDGE_DEVICE_ID
-
-    # get IoT Hub information
-    echo -e "\nWhat is the name of the ${YELLOW}IoT Hub${NC} that you want to use?"
-    read -p ">> " IOTHUB
-
-    # get resource group name
-    RESOURCE_GROUP=$(az resource list --name $IOTHUB --query [0].resourceGroup | tr -d \")
-    checkForError
-
-    # deploy resources using a template
-    echo -e "\nNow we'll deploy some resources to ${GREEN}${RESOURCE_GROUP}.${NC} This typically takes a few minutes."
-    echo -e "\nThe resources are defined in a template here:- ${BLUE}${BYOD_ARM_TEMPLATE_URL}${NC}"
-
-    az deployment group create --resource-group $RESOURCE_GROUP --template-uri $BYOD_ARM_TEMPLATE_URL --parameters hubName=$IOTHUB -o none
-    checkForError
-  
-    # query the resource group to see what has been deployed
-    # this includes everything in the resource group, and not just the resources deployed by the template
-    echo -e "\nResource group now contains these resources:"
-    RESOURCES=$(az resource list --resource-group $RESOURCE_GROUP --query '[].{name:name,"Resource Type":type}' -o table)
-    echo "${RESOURCES}"
-
-    # capture resource configuration in variables
-    IOTHUB_CONNECTION_STRING=$(az iot hub connection-string show --hub-name ${IOTHUB} --query='connectionString')
-    CONTAINER_REGISTRY=$(echo "${RESOURCES}" | awk '$2 ~ /Microsoft.ContainerRegistry\/registries$/ {print $1}')
-    CONTAINER_REGISTRY_USERNAME=$(az acr credential show -n $CONTAINER_REGISTRY --query 'username' | tr -d \")
-    CONTAINER_REGISTRY_PASSWORD=$(az acr credential show -n $CONTAINER_REGISTRY --query 'passwords[0].value' | tr -d \")
-
-    echo -e "
-    Some of the configuration for these resources can't be performed using a template.
-    So, we'll handle these for you now:
-    - register an IoT Edge device with the IoT Hub
-    - set up a service principal (app registration) for the Media Services account
-    "
-
-
-    # configure the hub for an edge device
-    echo "registering device..."
-    if test -z "$(az iot hub device-identity list -n $IOTHUB | grep "deviceId" | grep $EDGE_DEVICE_ID)"; then
-        az iot hub device-identity create --hub-name $IOTHUB --device-id $EDGE_DEVICE_ID --edge-enabled -o none
-        checkForError
-    fi
-    DEVICE_CONNECTION_STRING=$(az iot hub device-identity connection-string show --device-id $EDGE_DEVICE_ID --hub-name $IOTHUB --query='connectionString')
-
-    # create a directory to store the env, appsettings and the deployment maifest file
-    mkdir $BYOD_FOLDER
-
-    # write env file for edge deployment
-    echo "SUBSCRIPTION_ID=\"$SUBSCRIPTION_ID\"" >> $BYOD_ENV_FILE
-    echo "RESOURCE_GROUP=\"$RESOURCE_GROUP\"" >> $BYOD_ENV_FILE
-    echo "IOTHUB_CONNECTION_STRING=$IOTHUB_CONNECTION_STRING" >> $BYOD_ENV_FILE
-    echo "VIDEO_INPUT_FOLDER_ON_DEVICE=\"/home/avaedgeuser/samples/input\"" >> $BYOD_ENV_FILE
-    echo "VIDEO_OUTPUT_FOLDER_ON_DEVICE=\"/var/media\"" >> $BYOD_ENV_FILE
-    echo "APPDATA_FOLDER_ON_DEVICE=\"/var/lib/videoanalyzer\"" >> $BYOD_ENV_FILE
-    echo "CONTAINER_REGISTRY_USERNAME_myacr=$CONTAINER_REGISTRY_USERNAME" >> $BYOD_ENV_FILE
-    echo "CONTAINER_REGISTRY_PASSWORD_myacr=$CONTAINER_REGISTRY_PASSWORD" >> $BYOD_ENV_FILE
-
-    echo -e "
-    We've generated some configuration files for the deployed resource.
-    This .env can be used with the ${GREEN}Azure IoT Tools${NC} extension in ${GREEN}Visual Studio Code${NC}.
-    You can find it here:
-    ${BLUE}${BYOD_ENV_FILE}${NC}"
-
-    # write appsettings for sample code
-    echo "{" >> $BYOD_APP_SETTINGS_FILE
-    echo "    \"IoThubConnectionString\" : $IOTHUB_CONNECTION_STRING," >> $BYOD_APP_SETTINGS_FILE
-    echo "    \"deviceId\" : \"$EDGE_DEVICE_ID\"," >> $BYOD_APP_SETTINGS_FILE
-    echo "    \"moduleId\" : \"avaedge\"" >> $BYOD_APP_SETTINGS_FILE
-    echo -n "}" >> $BYOD_APP_SETTINGS_FILE
-
-
-    # set up deployment manifest
-    curl -s $DEPLOYMENT_MANIFEST_URL > $BYOD_DEPLOYMENT_MANIFEST_FILE
-
-    sed -i "s/\$CONTAINER_REGISTRY_USERNAME_myacr/$CONTAINER_REGISTRY_USERNAME/" $BYOD_DEPLOYMENT_MANIFEST_FILE
-    sed -i "s/\$CONTAINER_REGISTRY_PASSWORD_myacr/${CONTAINER_REGISTRY_PASSWORD//\//\\/}/" $BYOD_DEPLOYMENT_MANIFEST_FILE
-    sed -i "s/\$SUBSCRIPTION_ID/$SUBSCRIPTION_ID/" $BYOD_DEPLOYMENT_MANIFEST_FILE
-    sed -i "s/\$RESOURCE_GROUP/$RESOURCE_GROUP/" $BYOD_DEPLOYMENT_MANIFEST_FILE
-    sed -i "s/\$VIDEO_INPUT_FOLDER_ON_DEVICE/\/home\/avaedgeuser\/samples\/input/" $BYOD_DEPLOYMENT_MANIFEST_FILE
-    sed -i "s/\$VIDEO_OUTPUT_FOLDER_ON_DEVICE/\/var\/media/" $BYOD_DEPLOYMENT_MANIFEST_FILE
-    sed -i "s/\$APPDATA_FOLDER_ON_DEVICE/${APPDATA_FOLDER_ON_DEVICE//\//\\/}/" $BYOD_DEPLOYMENT_MANIFEST_FILE
-
-    echo -e "
-    The appsettings.json file is for the .NET Core sample application.
-    You can find it here:
-    ${BLUE}${BYOD_APP_SETTINGS_FILE}${NC}"
-
-    echo -e "
-    You can find the deployment manifest file here:
-    - ${BLUE}${BYOD_DEPLOYMENT_MANIFEST_FILE}${NC}"
-
-    # deploy the manifest file
-    echo -e "
-    Here is the list of modules deployed to your edge device:"
-    az iot edge set-modules --hub-name $IOTHUB --device-id $EDGE_DEVICE_ID --content $BYOD_FOLDER/deployment.amd64.json
-
-    #################################################################################################################################################
-    echo -e "
-    ${GREEN}All done!${NC} \U1F44D\n					
-    "
-    #################################################################################################################################################
-fi
 
 # cleanup
 
