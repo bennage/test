@@ -27,6 +27,7 @@ ARM_TEMPLATE_URL="$BASE_URL/deploy.json"
 ARM_TEMPLATE_FILE="deploy.json"
 CLOUD_INIT_URL="$BASE_URL/cloud-init.yml"
 CLOUD_INIT_FILE='cloud-init.yml'
+CLOUD_INIT_LOCAL_FILE='cloud-init.yml'
 DEPLOYMENT_MANIFEST_URL="$BASE_URL/deployment.template.json"
 DEPLOYMENT_MANIFEST_FILE='edge-deployment/deployment.amd64.json'
 RESOURCE_GROUP='ava-sample-resources'
@@ -73,9 +74,6 @@ if [ "$AZURE_HTTP_USER_AGENT" = "cloud-shell/1.0" ]; then
     VM_CREDENTIALS_FILE="$CLOUD_SHELL_FOLDER/$VM_CREDENTIALS_FILE"
     CLOUD_INIT_FILE="$CLOUD_SHELL_FOLDER/$CLOUD_INIT_FILE"
     DEPLOYMENT_MANIFEST_FILE="$CLOUD_SHELL_FOLDER/$DEPLOYMENT_MANIFEST_FILE"
-    BYOD_ENV_FILE="$BYOD_ENV_FILE"
-    BYOD_DEPLOYMENT_MANIFEST_FILE="$BYOD_DEPLOYMENT_MANIFEST_FILE"
-	BYOD_APP_SETTINGS_FILE="$BYOD_APP_SETTINGS_FILE"
 fi
 
 echo "Initialzing output files.
@@ -208,6 +206,7 @@ fi
         echo -e "
     Finally, we'll deploy a VM that will act as your IoT Edge device for using the AVA samples."
         # curl -s $CLOUD_INIT_URL > $CLOUD_INIT_FILE
+        cp $CLOUD_INIT_LOCAL_FILE $CLOUD_INIT_FILE
         # here be dragons
         # sometimes a / is present in the connection string and it breaks sed
         # this escapes the /
