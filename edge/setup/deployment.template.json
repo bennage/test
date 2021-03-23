@@ -38,16 +38,8 @@
             "settings": {
               "image": "mcr.microsoft.com/media/live-video-analytics:2",
               "createOptions" : "{\"HostConfig\":{\"LogConfig\":{\"Type\":\"\",\"Config\":{\"max-size\":\"10m\",\"max-file\":\"10\"}},\"Binds\":[\"$VIDEO_OUTPUT_FOLDER_ON_DEVICE:/var/media/\",\"$APPDATA_FOLDER_ON_DEVICE:/var/lib/videoanalyzer/\"]}}"
-            },
-            "env": {
-              "LOCAL_USER_ID": {
-                "value": "1010"
-              },
-              "LOCAL_GROUP_ID": {
-                "value": "1010"
-              }
             }
-          },       
+          },
           "rtspsim": {
             "version": "1.0",
             "type": "docker",
@@ -65,8 +57,8 @@
       "properties.desired": {
         "schemaVersion": "1.0",
         "routes": {
-            
-          "AVAToHub": "FROM /messages/modules/avaedge/outputs/* INTO $upstream"                
+
+          "AVAToHub": "FROM /messages/modules/avaedge/outputs/* INTO $upstream"
 
         },
         "storeAndForwardConfiguration": {
