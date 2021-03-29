@@ -1,64 +1,67 @@
 {
-    "name": "CVRToAMSAsset",
-    "@apiVersion": "2.0",
-    "properties": {
-        "description": "Continuous video recording to an Azure Media Services Asset",
-        "parameters": [
-            {
-                "name": "rtspUserName",
-                "type": "String",
-                "description": "rtsp source user name.",
-                "default": "dummyUserName"
-            },
-            {
-                "name": "rtspPassword",
-                "type": "String",
-                "description": "rtsp source password.",
-                "default" : "dummyPassword"
-            },
-            {
-                "name": "rtspUrl",
-                "type": "String",
-                "description": "rtsp Url"
-            }
-        ],        
-
-        "sources": [
-            {
-                "@type": "#Microsoft.Media.MediaGraphRtspSource",
-                "name": "rtspSource",
-                "endpoint":{
-                    "@type": "#Microsoft.Media.MediaGraphUnsecuredEndpoint",
-                    "url": "${rtspUrl}",
-                    "credentials": {
-                        "@type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
-                        "username": "${rtspUserName}",
-                        "password": "${rtspPassword}"
-                    }
-                }
-            }
+  "name": "CVRToAMSAsset",
+  "@apiVersion": "1.0",
+  "properties": {
+    "description": "Continuous video recording to an Azure Media Services Asset",
+    "parameters": [
+      {
+        "name": "rtspUserName",
+        "type": "String",
+        "description": "rtsp source user name.",
+        "default": "dummyUserName"
+      },
+      {
+        "name": "rtspPassword",
+        "type": "String",
+        "description": "rtsp source password.",
+        "default": "dummyPassword"
+      },
+      {
+        "name": "rtspUrl",
+        "type": "String",
+        "description": "rtsp Url"
+      }
+    ],
+    "sources": [
+      {
+        "@type": "#Microsoft.VideoAnalyzer.RtspSource",
+        "name": "rtspSource",
+        "endpoint": {
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
+          "url": "${rtspUrl}",
+          "credentials": {
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
+            "username": "${rtspUserName}",
+            "password": "${rtspPassword}"
+          }
+        }
+      }
+    ],
+    "sinks": [
+      {
+        "@type": "#Microsoft.VideoAnalyzer.VideoSink",
+        "name": "videoSink",
+        "videoName": "sample-cvr-asset",
+        "inputs": [
+          {
+            "nodeName": "rtspSource",
+            "outputSelectors": [
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
+            ]
+          }
         ],
-        "sinks": [
-            {
-                "@type": "#Microsoft.Media.MediaGraphAssetSink",
-                "name": "assetSink",
-                "assetNamePattern": "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}",
-                "segmentLength": "PT30S",
-                "localMediaCacheMaximumSizeMiB": "2048",
-                "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
-                "inputs": [
-                    {
-                        "nodeName": "rtspSource",
-                        "outputSelectors": [
-                            {
-                              "property": "mediaType",
-                              "operator": "is",
-                              "value": "video"
-                            }
-                          ]
-                    }
-                ]
-            }
-        ]
-    }
+        "videoCreationProperties": {
+          "title": "sample-cvr-asset",
+          "description": "Sample video using CVR asset",
+          "segmentLength": "PT30S"
+        },
+        "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
+        "localMediaCacheMaximumSizeMiB": "2048"
+      }
+    ]
+  }
 }

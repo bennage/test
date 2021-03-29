@@ -1,5 +1,5 @@
 {
-  "@apiVersion": "2.0",
+  "@apiVersion": "1.0",
   "name": "InferencingWithHttpExtension",
   "properties": {
     "description": "Analyzing live video using HTTP Extension to send images to an external inference engine",
@@ -60,14 +60,14 @@
     ],
     "sources": [
       {
-        "@type": "#Microsoft.Media.MediaGraphRtspSource",
+        "@type": "#Microsoft.VideoAnalyzer.RtspSource",
         "name": "rtspSource",
         "transport": "tcp",
         "endpoint": {
-          "@type": "#Microsoft.Media.MediaGraphUnsecuredEndpoint",
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
           "url": "${rtspUrl}",
           "credentials": {
-            "@type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
             "username": "${rtspUserName}",
             "password": "${rtspPassword}"
           }
@@ -76,13 +76,13 @@
     ],
     "processors": [
       {
-        "@type": "#Microsoft.Media.MediaGraphHttpExtension",
+        "@type": "#Microsoft.VideoAnalyzer.HttpExtension",
         "name": "httpExtension",
         "endpoint": {
-          "@type": "#Microsoft.Media.MediaGraphUnsecuredEndpoint",
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
           "url": "${inferencingUrl}",
           "credentials": {
-            "@type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
             "username": "${inferencingUserName}",
             "password": "${inferencingPassword}"
           }
@@ -94,7 +94,7 @@
             "height": "${frameHeight}"
           },
           "format": {
-            "@type": "#Microsoft.Media.MediaGraphImageFormatBmp"
+            "@type": "#Microsoft.VideoAnalyzer.ImageFormatBmp"
           }
         },
         "samplingOptions": {
@@ -105,11 +105,11 @@
           {
             "nodeName": "rtspSource",
             "outputSelectors": [
-            {
-              "property": "mediaType",
-              "operator": "is",
-              "value": "video"
-            }
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
             ]
           }
         ]
@@ -117,7 +117,7 @@
     ],
     "sinks": [
       {
-        "@type": "#Microsoft.Media.MediaGraphIoTHubMessageSink",
+        "@type": "#Microsoft.VideoAnalyzer.IoTHubMessageSink",
         "name": "hubSink",
         "hubOutputName": "inferenceOutput",
         "inputs": [

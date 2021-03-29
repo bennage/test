@@ -1,5 +1,5 @@
 {
-  "@apiVersion": "2.0",
+  "@apiVersion": "1.0",
   "name": "EVRtoFilesBasedOnHubMessages",
   "properties": {
     "description": "Event-based recording of video to files based on messages from via hub source",
@@ -42,27 +42,27 @@
     ],
     "sources": [
       {
-        "@type": "#Microsoft.Media.MediaGraphRtspSource",
+        "@type": "#Microsoft.VideoAnalyzer.RtspSource",
         "name": "rtspSource",
         "endpoint": {
-          "@type": "#Microsoft.Media.MediaGraphUnsecuredEndpoint",
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
           "url": "rtsp://rtspsim:554/media/camera-300s.mkv",
           "credentials": {
-            "@type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
             "username": "test",
             "password": "test"
           }
         }
       },
       {
-        "@type": "#Microsoft.Media.MediaGraphIoTHubMessageSource",
+        "@type": "#Microsoft.VideoAnalyzer.IoTHubMessageSource",
         "name": "iotMessageSource",
         "hubInputName": "${hubSourceInput}"
       }
     ],
     "processors": [
       {
-        "@type": "#Microsoft.Media.MediaGraphSignalGateProcessor",
+        "@type": "#Microsoft.VideoAnalyzer.SignalGateProcessor",
         "name": "signalGateProcessor",
         "inputs": [
           {
@@ -87,7 +87,7 @@
     ],
     "sinks": [
       {
-        "@type": "#Microsoft.Media.MediaGraphFileSink",
+        "@type": "#Microsoft.VideoAnalyzer.FileSink",
         "name": "fileSink",
         "inputs": [
           {

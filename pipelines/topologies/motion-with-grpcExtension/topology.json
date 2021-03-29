@@ -1,5 +1,5 @@
 {
-  "@apiVersion": "2.0",
+  "@apiVersion": "1.0",
   "name": "EVROnMotionPlusGrpcExtension",
   "properties": {
     "description": "Event-based video recording to Assets based on motion events, and using gRPC Extension to send images to an external inference engine",
@@ -78,13 +78,13 @@
     ],
     "sources": [
       {
-        "@type": "#Microsoft.Media.MediaGraphRtspSource",
+        "@type": "#Microsoft.VideoAnalyzer.RtspSource",
         "name": "rtspSource",
         "endpoint": {
-          "@type": "#Microsoft.Media.MediaGraphUnsecuredEndpoint",
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
           "url": "${rtspUrl}",
           "credentials": {
-            "@type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
             "username": "${rtspUserName}",
             "password": "${rtspPassword}"
           }
@@ -93,24 +93,24 @@
     ],
     "processors": [
       {
-        "@type": "#Microsoft.Media.MediaGraphMotionDetectionProcessor",
+        "@type": "#Microsoft.VideoAnalyzer.MotionDetectionProcessor",
         "name": "motionDetection",
         "sensitivity": "${motionSensitivity}",
         "inputs": [
           {
             "nodeName": "rtspSource",
             "outputSelectors": [
-            {
-              "property": "mediaType",
-              "operator": "is",
-              "value": "video"
-            }
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
             ]
           }
         ]
       },
       {
-        "@type": "#Microsoft.Media.MediaGraphSignalGateProcessor",
+        "@type": "#Microsoft.VideoAnalyzer.SignalGateProcessor",
         "name": "signalGateProcessor",
         "inputs": [
           {
@@ -119,11 +119,11 @@
           {
             "nodeName": "rtspSource",
             "outputSelectors": [
-            {
-              "property": "mediaType",
-              "operator": "is",
-              "value": "video"
-            }
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
             ]
           }
         ],
@@ -133,13 +133,13 @@
         "maximumActivationTime": "PT30S"
       },
       {
-        "@type": "#Microsoft.Media.MediaGraphGrpcExtension",
+        "@type": "#Microsoft.VideoAnalyzer.GrpcExtension",
         "name": "grpcExtension",
         "endpoint": {
-          "@type": "#Microsoft.Media.MediaGraphUnsecuredEndpoint",
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
           "url": "${grpcExtensionAddress}",
           "credentials": {
-            "@type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
             "username": "${grpcExtensionUserName}",
             "password": "${grpcExtensionPassword}"
           }
@@ -155,23 +155,23 @@
             "height": "${frameHeight}"
           },
           "format": {
-            "@type": "#Microsoft.Media.MediaGraphImageFormatJpeg",
+            "@type": "#Microsoft.VideoAnalyzer.ImageFormatJpeg",
             "quality": "${imageQuality}"
           }
         },
         "samplingOptions": {
           "skipSamplesWithoutAnnotation": "false",
           "maximumSamplesPerSecond": "30"
-          },
+        },
         "inputs": [
           {
             "nodeName": "rtspSource",
             "outputSelectors": [
-            {
-              "property": "mediaType",
-              "operator": "is",
-              "value": "video"
-            }
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
             ]
           }
         ]
@@ -179,27 +179,31 @@
     ],
     "sinks": [
       {
-        "@type": "#Microsoft.Media.MediaGraphAssetSink",
-        "name": "assetSink",
-        "assetNamePattern": "sampleAssetFromEVR-AVAEdge-${System.DateTime}",
-        "segmentLength": "PT30S",
-        "localMediaCacheMaximumSizeMiB": "2048",
-        "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
+        "@type": "#Microsoft.VideoAnalyzer.VideoSink",
+        "name": "videoSink",
+        "videoName": "sample-motion-with-grpc-extension",
         "inputs": [
           {
-            "nodeName": "signalGateProcessor",
+            "nodeName": "rtspSource",
             "outputSelectors": [
-            {
-              "property": "mediaType",
-              "operator": "is",
-              "value": "video"
-            }
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
             ]
           }
-        ]
+        ],
+        "videoCreationProperties": {
+          "title": "sample-motion-with-grpc-extension",
+          "description": "Sample video using motion with gRPC extension",
+          "segmentLength": "PT30S"
+        },
+        "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
+        "localMediaCacheMaximumSizeMiB": "2048"
       },
       {
-        "@type": "#Microsoft.Media.MediaGraphIoTHubMessageSink",
+        "@type": "#Microsoft.VideoAnalyzer.IoTHubMessageSink",
         "name": "hubSink",
         "hubOutputName": "${hubSinkOutputName}",
         "inputs": [
