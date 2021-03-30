@@ -161,7 +161,7 @@
         "videoName": "sample-motion-with-http-extension",
         "inputs": [
           {
-            "nodeName": "rtspSource",
+            "nodeName": "signalGateProcessor",
             "outputSelectors": [
               {
                 "property": "mediaType",

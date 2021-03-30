@@ -242,7 +242,7 @@
         "videoName": "sample-ai-composition",
         "inputs": [
           {
-            "nodeName": "rtspSource",
+            "nodeName": "signalGateProcessor",
             "outputSelectors": [
               {
                 "property": "mediaType",

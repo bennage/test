@@ -146,7 +146,7 @@
         "videoName": "sample-hub-messages-assets",
         "inputs": [
           {
-            "nodeName": "rtspSource",
+            "nodeName": "signalGateProcessor",
             "outputSelectors": [
               {
                 "property": "mediaType",
