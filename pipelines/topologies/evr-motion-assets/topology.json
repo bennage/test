@@ -98,7 +98,7 @@
         "videoName": "sample-motion-assets",
         "inputs": [
           {
-            "nodeName": "rtspSource",
+            "nodeName": "signalGateProcessor",
             "outputSelectors": [
               {
                 "property": "mediaType",

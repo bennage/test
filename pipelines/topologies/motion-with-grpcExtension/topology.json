@@ -184,7 +184,7 @@
         "videoName": "sample-motion-with-grpc-extension",
         "inputs": [
           {
-            "nodeName": "rtspSource",
+            "nodeName": "signalGateProcessor",
             "outputSelectors": [
               {
                 "property": "mediaType",

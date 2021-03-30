@@ -125,7 +125,7 @@
         "videoName": "sample-http-extension-assets",
         "inputs": [
           {
-            "nodeName": "rtspSource",
+            "nodeName": "signalGateProcessor",
             "outputSelectors": [
               {
                 "property": "mediaType",

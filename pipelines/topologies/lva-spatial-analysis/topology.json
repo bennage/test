@@ -121,7 +121,7 @@
         "videoName": "sample-spatial-analysis",
         "inputs": [
           {
-            "nodeName": "rtspSource",
+            "nodeName": "signalGateProcessor",
             "outputSelectors": [
               {
                 "property": "mediaType",
