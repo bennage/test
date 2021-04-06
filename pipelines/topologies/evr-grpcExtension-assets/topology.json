@@ -1,5 +1,5 @@
 {
-  "@apiVersion": "2.0",
+  "@apiVersion": "1.0",
   "name": "EVRtoAssetsByGrpcExtension",
   "properties": {
     "description": "Event-based video recording to Assets based on events from grpc extension",
@@ -42,7 +42,7 @@
         "name": "grpcExtensionAddress",
         "type": "String",
         "description": "grpc AVA Extension Address",
-        "default": "tcp://lvaextension:44000"
+        "default": "tcp://avaextension:44000"
       },
       {
         "name": "grpcExtensionUserName",
@@ -89,13 +89,13 @@
     ],
     "sources": [
       {
-        "@type": "#Microsoft.Media.MediaGraphRtspSource",
+        "@type": "#Microsoft.VideoAnalyzer.RtspSource",
         "name": "rtspSource",
         "endpoint": {
-          "@type": "#Microsoft.Media.MediaGraphUnsecuredEndpoint",
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
           "url": "${rtspUrl}",
           "credentials": {
-            "@type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
             "username": "${rtspUserName}",
             "password": "${rtspPassword}"
           }
@@ -104,13 +104,13 @@
     ],
     "processors": [
       {
-        "@type": "#Microsoft.Media.MediaGraphGrpcExtension",
+        "@type": "#Microsoft.VideoAnalyzer.GrpcExtension",
         "name": "grpcExtension",
         "endpoint": {
-          "@type": "#Microsoft.Media.MediaGraphUnsecuredEndpoint",
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
           "url": "${grpcExtensionAddress}",
           "credentials": {
-            "@type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
             "username": "${grpcExtensionUserName}",
             "password": "${grpcExtensionPassword}"
           }
@@ -126,14 +126,14 @@
             "height": "${frameHeight}"
           },
           "format": {
-            "@type": "#Microsoft.Media.MediaGraphImageFormatJpeg",
+            "@type": "#Microsoft.VideoAnalyzer.ImageFormatJpeg",
             "quality": "${imageQuality}"
           }
         },
         "samplingOptions": {
           "skipSamplesWithoutAnnotation": "false",
           "maximumSamplesPerSecond": "30"
-          },
+        },
         "inputs": [
           {
             "nodeName": "rtspSource",
@@ -148,7 +148,7 @@
         ]
       },
       {
-        "@type": "#Microsoft.Media.MediaGraphSignalGateProcessor",
+        "@type": "#Microsoft.VideoAnalyzer.SignalGateProcessor",
         "name": "signalGateProcessor",
         "inputs": [
           {
@@ -166,20 +166,31 @@
     ],
     "sinks": [
       {
-        "@type": "#Microsoft.Media.MediaGraphAssetSink",
-        "name": "assetSink",
-        "assetNamePattern": "sampleAssetFromEVR-AVAEdge-${System.DateTime}",
-        "segmentLength": "PT30S",
-        "localMediaCacheMaximumSizeMiB": "200",
-        "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
+        "@type": "#Microsoft.VideoAnalyzer.VideoSink",
+        "name": "videoSink",
+        "videoName": "sample-grpc-extension-assets",
         "inputs": [
           {
-            "nodeName": "signalGateProcessor"
+            "nodeName": "signalGateProcessor",
+            "outputSelectors": [
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
+            ]
           }
-        ]
+        ],
+        "videoCreationProperties": {
+          "title": "sample-grpc-extension-assets",
+          "description": "Sample video using gRPC extension assets",
+          "segmentLength": "PT30S"
+        },
+        "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
+        "localMediaCacheMaximumSizeMiB": "2048"
       },
       {
-        "@type": "#Microsoft.Media.MediaGraphIoTHubMessageSink",
+        "@type": "#Microsoft.VideoAnalyzer.IoTHubMessageSink",
         "name": "hubSink",
         "hubOutputName": "${hubSinkOutputName}",
         "inputs": [
