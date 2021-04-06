@@ -1,5 +1,5 @@
 {
-  "@apiVersion": "2.0",
+  "@apiVersion": "1.0",
   "name": "InferencingWithGrpcExtension",
   "properties": {
     "description": "Record on motion to AMS Asset and record events from external models through gRPC Extension",
@@ -30,8 +30,8 @@
       {
         "name": "grpcExtensionAddress",
         "type": "String",
-        "description": "grpc LVA Extension Address",
-        "default": "tcp://lvaExtension:5001"
+        "description": "grpc AVA Extension Address",
+        "default": "tcp://avaextension:5001"
       },
       {
         "name": "grpcExtensionUserName",
@@ -66,13 +66,13 @@
       {
         "name": "frameWidth",
         "type": "String",
-        "description": "Width of the video frame to be received from LVA.",
+        "description": "Width of the video frame to be received from AVA.",
         "default": "416"
       },
       {
         "name": "frameHeight",
         "type": "String",
-        "description": "Height of the video frame to be received from LVA.",
+        "description": "Height of the video frame to be received from AVA.",
         "default": "416"
       },
       {
@@ -152,7 +152,11 @@
         },
         "dataTransfer": {
           "mode": "sharedMemory",
-          "SharedMemorySizeMiB": "5"
+          "SharedMemorySizeMiB": "75"
+        },
+        "samplingOptions": {
+          "skipSamplesWithoutAnnotation": "false",
+          "maximumSamplesPerSecond": "20"
         },
         "image": {
           "scale": {
