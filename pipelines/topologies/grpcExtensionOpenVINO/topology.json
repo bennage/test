@@ -25,7 +25,7 @@
         "name": "grpcExtensionAddress",
         "type": "String",
         "description": "Address of the gRPC Server",
-        "default": "tcp://lvaExtension:5001"
+        "default": "tcp://avaExtension:5001"
       },
       {
         "name": "grpcExtensionUserName",
@@ -94,7 +94,7 @@
         },
         "dataTransfer": {
           "mode": "sharedMemory",
-          "SharedMemorySizeMiB": "5"
+          "SharedMemorySizeMiB": "75"
         },
         "image": {
           "scale": {
