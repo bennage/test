@@ -31,7 +31,7 @@
         "name": "grpcExtensionAddress",
         "type": "String",
         "description": "grpc AVA Extension Address",
-        "default": "tcp://lvaextension:44000"
+        "default": "tcp://avaextension:44000"
       },
       {
         "name": "grpcExtensionUserName",
