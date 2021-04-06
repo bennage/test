@@ -103,7 +103,7 @@
         },
         "image": {
           "scale": {
-            "mode": "preserveAspectRatio",
+            "mode": "pad",
             "width": "416",
             "height": "416"
           },
