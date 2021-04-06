@@ -106,11 +106,11 @@
           {
             "nodeName": "rtspSource",
             "outputSelectors": [
-            {
-              "property": "mediaType",
-              "operator": "is",
-              "value": "video"
-            }
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
             ]
           }
         ]
@@ -125,11 +125,11 @@
           {
             "nodeName": "rtspSource",
             "outputSelectors": [
-            {
-              "property": "mediaType",
-              "operator": "is",
-              "value": "video"
-            }
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
             ]
           }
         ],

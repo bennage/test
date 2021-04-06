@@ -25,7 +25,7 @@
         "name": "grpcExtensionAddress",
         "type": "String",
         "description": "Address of the gRPC Server",
-        "default": "tcp://avaExtension:5001"
+        "default": "tcp://avaextension:5001"
       },
       {
         "name": "grpcExtensionUserName",
