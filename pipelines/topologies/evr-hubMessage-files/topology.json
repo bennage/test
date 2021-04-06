@@ -46,11 +46,11 @@
         "name": "rtspSource",
         "endpoint": {
           "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
-          "url": "rtsp://rtspsim:554/media/camera-300s.mkv",
+          "url": "${rtspUrl}",
           "credentials": {
             "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
-            "username": "test",
-            "password": "test"
+            "username": "{rtspUserName}",
+            "password": "{rtspPassword}"
           }
         }
       },
