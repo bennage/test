@@ -70,7 +70,6 @@
     "avaedge": {
       "properties.desired": {
         "ProvisioningToken": "$AVA_PROVISIONING_TOKEN",
-        "applicationDataDirectory": "/var/lib/azuremediaservices",
         "ApplicationDataDirectory": "/var/lib/videoanalyzer",
         "DiagnosticsEventsOutputName": "diagnostics",
         "OperationalEventsOutputName": "operational",
