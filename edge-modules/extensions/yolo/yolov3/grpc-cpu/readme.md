@@ -1,6 +1,6 @@
 # YOLOv3 ONNX models with gRPC
 
-The following instructions will enable you to build a Docker container with a [YOLOv3](http://pjreddie.com/darknet/yolo/) [ONNX](http://onnx.ai/) model running behind a gRPC endpoint. If the YOLOv3 is used in a composite topology, it will use the configured inference confidence to determine whether to run inferences using the YOLOv3 or return the inference results from the upstream module. You can specify the inference confidence by passing the -c parameter, by default the inference confidence is set to 0.75.
+The following instructions will enable you to build a Docker container with a [YOLOv3](http://pjreddie.com/darknet/yolo/) [ONNX](http://onnx.ai/) model running behind a gRPC endpoint. If the YOLOv3 is used in a composite live pipeline, it will use the configured inference confidence to determine whether to run inferences using the YOLOv3 or return the inference results from the upstream module. You can specify the inference confidence by passing the -c parameter, by default the inference confidence is set to 0.75.
 
 
 ## Contributions needed
@@ -19,15 +19,15 @@ To build the container image locally, run the following Docker command from a te
 
 YOLOv3:
 ```bash
-    docker build -f yolov3.dockerfile . -t lvaextension:grpc-yolov3-onnx-v1.0
+    docker build -f yolov3.dockerfile . -t avaextension:grpc-yolov3-onnx-v1.0
 ```
 
 > <span> [!TIP] </span>  
 > If you do not wish to build the local Dockerfile, you may pull it off of Microsoft Container Registry and skip the following step <br>
-> `docker run --name my_yolo_container -p 8080:80 -d  -i mcr.microsoft.com/lva-utilities/lvaextension:grpc-yolov3-onnx-v1.0`
+> `docker run --name my_yolo_container -p 8080:80 -d  -i mcr.microsoft.com/ava-utilities/avaextension:grpc-yolov3-onnx-v1.0`
 
 ## Running and testing
-Please see [this](https://aka.ms/lva-grpc-quickstart) quickstart.
+Please see [this](https://aka.ms/ava-grpc-quickstart) quickstart.
 
 ## Compiling the protobuf files for python
 
