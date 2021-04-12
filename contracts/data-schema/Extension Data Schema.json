@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "title": "Live Video Analytics Inference Data Schema",
+  "title": "Azure Video Analyzer Inference Data Schema",
   "type": "object",
   "description": "Top level inference results.",
   "properties": {
@@ -318,7 +318,7 @@
         },
         "other": {
           "$ref": "#/definitions/other"
-        },        
+        },
         "extensions": {
           "$id": "#/properties/extensions",
           "type": "object",
