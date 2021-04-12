@@ -18,7 +18,7 @@ from model_wrapper import YoloV3Model
 # Get debug flag from env variable (Returns None if not set)
 # Set this environment variables in the IoTEdge Deployment manifest to activate debugging.
 DEBUG = os.getenv('DEBUG')
-DEBUG_OUTPUT_FOLDER = "/lvaextensiondebug"
+DEBUG_OUTPUT_FOLDER = "/avaextensiondebug"
 
 class TransferType(Enum):
     BYTES = 1           # Embedded Content
