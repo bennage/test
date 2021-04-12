@@ -19,15 +19,15 @@ To build the container image locally, run the following Docker command from a te
 
 YOLOv3:
 ```bash
-    docker build -f Dockerfile . -t lvaextension:grpc-tiny-yolov3-onnx-v1.0
+    docker build -f Dockerfile . -t avaextension:grpc-tiny-yolov3-onnx-v1.0
 ```
 
 > <span> [!TIP] </span>  
 > If you do not wish to build the local Dockerfile, you may pull it off of Microsoft Container Registry and skip the following step <br>
-> `docker run --name my_tiny_yolo_container -p 8080:80 -d  -i mcr.microsoft.com/lva-utilities/lvaextension:grpc-yolov3-tiny-onnx-v1.0`
+> `docker run --name my_tiny_yolo_container -p 8080:80 -d  -i mcr.microsoft.com/ava-utilities/avaextension:grpc-yolov3-tiny-onnx-v1.0`
 
 ## Running and testing
-Please see [this](https://aka.ms/lva-grpc-quickstart) quickstart.
+Please see [this](https://aka.ms/ava-grpc-quickstart) quickstart.
 
 ## Compiling the protobuf files for python
 
