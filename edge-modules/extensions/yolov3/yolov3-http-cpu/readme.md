@@ -16,7 +16,7 @@ Note: References to third-party software in this repo are for informational and 
 
 ## Building the Docker container
 
-To build the container image locally, run the following Docker command from a terminal in that directory. Choose between the full YOLOv3 model (237 MB). The process should take a few minutes to complete. 
+To build the container image locally, run the following Docker command from a terminal in that directory. The process should take a few minutes to complete. 
 
 YOLOv3:
 ```bash
@@ -25,14 +25,14 @@ YOLOv3:
 
 > <span> [!TIP] </span>  
 > If you do not wish to build the local Dockerfile, you may pull it off of Microsoft Container Registry and skip the following step <br>
-> `docker run --name my_yolo_container -p 8080:80 -d  -i mcr.microsoft.com/ava-utilities/avaextension:http-yolov3-onnx-v1.0` for the full YOLOv3 model.
+> `docker run --name my_yolo_container -p 8080:80 -d  -i mcr.microsoft.com/ava-utilities/avaextension:http-yolov3-onnx-v1.0`
 
 
 ## Running and testing
 > <span style="color:red; font-weight: bold"> [!IMPORTANT] </span>  
 > The REST endpoint accepts images with size 416 px x 416 px. Since the AVA Edge module is already capable of sending specifically sized images in specific formats, we do not need to preprocess the incoming images, thus decreasing the computational time needed to run the model.
 
-Run the container image using either of the following Docker commands:
+Run the container image using the following Docker commands:
 
 YOLOv3:
 ```bash
