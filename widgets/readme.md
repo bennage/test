@@ -53,3 +53,92 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
         ```
             npm install @video-analyzer/widgets
         ```
+
+### `RVX player widget`
+#### Import
+##### Native JS usage:
+
+Import ava-widgets-sdk.js / https://salmon-mushroom-072389f0f.azurestaticapps.net/scripts.js to your HTML file:
+```html live
+    <head>
+        <script async type=”module” src="./ava-widgets-sdk.js"></script>
+    </head>
+    …
+    …
+```
+
+```html live
+   <head>
+    <script async type=”module” src="https://salmon-mushroom-072389f0f.azurestaticapps.net/scripts.js"></script>
+    </head>
+    …
+    …
+```
+
+##### Typescript usage:
+
+``` 
+import { RVXWidget } from '@video-analytics/widgets';
+```
+
+#### Getting Started
+RVX widget is a web-component that can be created using HTML or dynamically. 
+
+Creating using HTML:
+```html live
+  <head>
+	…
+ 	..
+  <body>
+	<rvx-widget><rvx-widget>
+  </body>
+```
+
+Creating dynamically:
+
+##### Native JS usage:
+```html live
+  <head>
+    <script async type=”module” src="https://salmon-mushroom-072389f0f.azurestaticapps.net/scripts.js"></script>
+  </head>
+  <body>
+	…
+  </body>
+  <script>(function () {
+            const rvxWidget = new window.ava.widgets.rvx();
+            document.firstElementChild.appendChild(rvxWidget)
+  })()
+</script>
+```
+
+##### Typescript usage:
+``` 
+import { RVXWidget } from '@video-analytics/widgets';
+
+const rvxWidget = new RVXWidget();
+document.firstElementChild.appendChild(RVXWidget).
+```
+
+#### Properties
+Name | Type | Default | Description 
+------------ | ------------- | ------------- | -------------
+width	| string	         | 100%	| Reflects the value of widget width.
+height	| string	         | 100%	| Reflects the value of widget height
+config	| IRVXWidgetConfig	 | null	| Widget configuration
+
+#### Events
+Name | Parameters | Description 
+------------ | ------------- | -------------
+TOKEN_EXPIRED	| -	         | Callback to invoke when AVA JWT token is expired.
+
+#### Methods
+Name | Parameters | Description 
+------------ | ------------- | -------------
+constructor 	| width: string = '', height: string = '', config: IRVXWidgetConfig = null	| Widget constructor. If called with config, you don’t need to call _configure_ function
+setAccessToken	| jwtToken:string	| Update the widget token. 
+set apiBase	    | apiBase:string	| Control AVA-API base. Good for using mock API / testing API.
+configure	    | config: IRVXWidgetConfig	| Update widget configuration.
+load	        | -	                | Loads and initialize the widget according to provided configuration. If not called, widget will be empty  
+
+
+#### Code snippets:
