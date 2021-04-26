@@ -1,7 +1,7 @@
 
 ![ava_widgets_banner_github.png](./ava_widgets_banner_github.png)
 
-# Azure video analyzer widgets
+# Azure video analyzer widgets - under construction
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](https://www.typescriptlang.org/)
@@ -24,10 +24,10 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
     _For importing the library from a blob_, please make sure you have access to the following file:  https://salmon-mushroom-072389f0f.azurestaticapps.net/scripts.js 
 
 2.	#### For consuming as NPM package from Azure private feed: 
-    Access to feed: please make sure you have access to [Media-AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) private feed: 
+    Access to feed: please make sure you have access to [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) private feed: 
 
-    Connect to Media-AVA-widgets feed:
-    1.	Enter [Media-AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) 
+    Connect to AVA-widgets feed:
+    1.	Enter [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) 
     2.	Click on ‘Connect to feed’
     3.  Select 'npm'
     4.  Follow installation steps. 
@@ -35,8 +35,7 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
 ## Installing AVA library
 ###### NOTE: this is relevant during development mode. After releasing to GITHUB, the flow will be updated.
 
-1.	#### For consuming at runtime:
-    _Build ava widgets library_-
+1.	#### For building the library yourself:
         a.	Clone repo code: [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets)
         b.	Once cloned, enter repository location and write the following commands:
             ```
@@ -47,9 +46,9 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
             ```
             Once build is done, enter _/dist_ folder, there you will find _ava-widgets-sdk.js_ file.
 
-    _For importing from a blob option, you can skip this step._
+2. #### For importing the library from a blob, you can skip this step.
 
-2.	#### For consuming as NPM package from Azure private feed: 
+3.	#### For consuming as NPM package from Azure private feed: 
     1.  Create in your application an _.npmrc_ file and follow the steps in [Prerequisites](/widgets#for-consuming-as-npm-package-from-azure-private-feed) 
     2.  Install the library:
         ```
@@ -76,8 +75,8 @@ Import ava-widgets-sdk.js / https://salmon-mushroom-072389f0f.azurestaticapps.ne
 
 ##### Typescript usage:
 
-``` 
-import { RVXWidget } from '@video-analytics/widgets';
+```typescript 
+import { RVXWidget } from '@video-analyzer/widgets';
 ```
 
 
@@ -108,8 +107,8 @@ Creating dynamically:
 ```
 
 ##### Typescript usage:
-``` 
-import { RVXWidget } from '@video-analytics/widgets';
+```typescript
+import { RVXWidget } from '@video-analyzer/widgets';
 
 const rvxWidget = new RVXWidget();
 document.firstElementChild.appendChild(RVXWidget).
@@ -230,8 +229,8 @@ load	        | -	                | Loads and initialize the widget according to 
 4.  *Use rvx-widget in your angular application:*
 
     1.	Go to your _src/main.ts_ file and add the following code:
-        ```
-            import { RVXWidget } from '@media-video-analytics/widgets';
+        ```typescript
+            import { RVXWidget } from '@video-analyzer/widgets';
 
             /*
             * Ensure that tree-shaking doesn't remove this component from * the bundle. 
@@ -241,7 +240,7 @@ load	        | -	                | Loads and initialize the widget according to 
         ```
 
     2.	To allow an NgModule to contain Non-Angular element names, add the following code in your application module typescript file _app.module.ts_:
-        ```
+        ```typescript
             import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
             @NgModule({
