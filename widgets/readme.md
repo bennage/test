@@ -27,10 +27,10 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
     Access to feed: please make sure you have access to [Media-AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) private feed: 
 
     Connect to Media-AVA-widgets feed:
-    a.	Enter [Media-AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) 
-    b.	Click on ‘Connect to feed’
-    C.  Select 'npm'
-    d.  Follow installation steps. 
+    1.	Enter [Media-AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) 
+    2.	Click on ‘Connect to feed’
+    3.  Select 'npm'
+    4.  Follow installation steps. 
 
 ## Installing AVA library
 ###### NOTE: this is relevant during development mode. After releasing to GITHUB, the flow will be updated.
@@ -56,6 +56,7 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
             npm install @video-analyzer/widgets
         ```
 
+
 ### `RVX player widget`
 ### Import
 ##### Native JS usage:
@@ -78,6 +79,7 @@ Import ava-widgets-sdk.js / https://salmon-mushroom-072389f0f.azurestaticapps.ne
 ``` 
 import { RVXWidget } from '@video-analytics/widgets';
 ```
+
 
 ### Getting Started
 RVX widget is a web-component that can be created using HTML or dynamically. 
@@ -116,7 +118,7 @@ document.firstElementChild.appendChild(RVXWidget).
 ### Properties
 Name | Type | Default | Description 
 ------------ | ------------- | ------------- | -------------
-width	| string	         | 100%	| Reflects the value of widget width.
+width	| string	         | 100%	| Reflects the value of widget width
 height	| string	         | 100%	| Reflects the value of widget height
 config	| IRVXWidgetConfig	 | null	| Widget configuration
 
@@ -243,8 +245,8 @@ load	        | -	                | Loads and initialize the widget according to 
             import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
             @NgModule({
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-            })
+                schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            });
         ```
 
     3.	Now we can start using RVX widget. Replace the HTML template in your app.component.html, file with the following markup:
