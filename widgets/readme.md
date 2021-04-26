@@ -50,8 +50,8 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
     _For importing from a blob option, you can skip this step._
 
 2.	#### For consuming as NPM package from Azure private feed: 
-    a.  Create in your application an _.npmrc_ file and follow the steps in . [Prerequisites/2](/Prerequisites/2) 
-    b.  Install the library:
+    1.  Create in your application an _.npmrc_ file and follow the steps in [Prerequisites](/widgets#for-consuming-as-npm-package-from-azure-private-feed) 
+    2.  Install the library:
         ```
             npm install @video-analyzer/widgets
         ```
@@ -84,9 +84,6 @@ RVX widget is a web-component that can be created using HTML or dynamically.
 
 Creating using HTML:
 ```html live
-  <head>
-	…
- 	..
   <body>
 	<rvx-widget><rvx-widget>
   </body>
@@ -100,7 +97,6 @@ Creating dynamically:
     <script async type=”module” src="https://salmon-mushroom-072389f0f.azurestaticapps.net/scripts.js"></script>
   </head>
   <body>
-	…
   </body>
   <script>(function () {
             const rvxWidget = new window.ava.widgets.rvx();
