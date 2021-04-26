@@ -17,7 +17,7 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
 ###### NOTE: this is relevant during development mode. After releasing to GITHUB, the flow will be updated.
 
 1.	#### For consuming at runtime:
-    In this option, you can **build the library yourself** or **import the build library from a blob**.
+    In this option, you can **build the library yourself** or **import the library from a blob**.
     _For building AVA widgets library_, please make sure you have access to the following repo - [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets)
     If not, please reach out to @Nofar Edan or @Ori Ziv to get access.
 
