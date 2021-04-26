@@ -24,8 +24,9 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
     _For importing the library from a blob_, please make sure you have access to the following file:  https://salmon-mushroom-072389f0f.azurestaticapps.net/scripts.js 
 
 2.	#### For consuming as NPM package from Azure private feed: 
-    Access to feed: please make sure you have access to [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) private feed.
-    Connect to AVA-widgets feed:
+    Please make sure you have access to [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) private feed.
+
+    Then, connect to AVA-widgets feed:
     1.	Enter [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets/_packaging?_a=feed&feed=Media-AVA-Widgets) 
     2.	Click on ‘Connect to feed’
     3.  Select 'npm'
