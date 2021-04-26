@@ -36,17 +36,17 @@ A collection of widgets (web components) using Azure Video Analyzer platform cap
 ###### NOTE: this is relevant during development mode. After releasing to GITHUB, the flow will be updated.
 
 1.	#### For building the library yourself:
-        a.	Clone repo code: [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets)
-        b.	Once cloned, enter repository location and write the following commands:
-            ```
-            npm install
-            ```
-            ```
-            npm run build
-            ```
-            Once build is done, enter _/dist_ folder, there you will find _ava-widgets-sdk.js_ file.
+    1.	Clone repo code: [AVA-Widgets](https://dev.azure.com/MediaWidgets/AVA%20Widgets)
+    2.	Once cloned, enter repository location and write the following commands:
+        ```
+        npm install
+        ```
+        ```
+        npm run build
+        ```
+        Once build is done, enter _/dist_ folder, there you will find _ava-widgets-sdk.js_ file.
 
-2. #### For importing the library from a blob, you can skip this step.
+2.  #### For importing the library from a blob, you can skip this step.
 
 3.	#### For consuming as NPM package from Azure private feed: 
     1.  Create in your application an _.npmrc_ file and follow the steps in [Prerequisites](/widgets#for-consuming-as-npm-package-from-azure-private-feed) 
