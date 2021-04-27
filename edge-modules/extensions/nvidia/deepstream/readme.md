@@ -96,20 +96,20 @@ To use the container you just built along with AVA, you can use the deployment m
 
 If you look at the avaextension module in the deployment manifest you will see that it exposes ports 80 and 5001 mapped to host ports 8080 and 5001 respectively. There are also two environment variables "MJPEG_OUTPUT" and "GST_CONFIG_FILE". MJPEG_OUTPUT means that the container will output a MJPEG stream from the GStreamer pipeline and [GST_CONFIG_FILE](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.html#wwpID0E04DB0HA) defines the DeepStream pipeline.
 
-To test the docker container you will need to create a graph topology with gRPC extension or you can use the sample topology named **grpcExtension.json** located in the **topology folder** and then create a graph instance based on that topology. You can do so using AVA on IoT Edge [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) sample code. Use the following JSON for operations.json.
+To test the docker container you will need to create a pipelineTopology with gRPC extension or you can use the sample pipelineTopology named **grpcExtension.json** located in the **pipelineTopology folder** and then create a livePipeline based on that pipelineTopology. You can do so using AVA on IoT Edge [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) sample code. Use the following JSON for operations.json.
 
 ```JSON
 {
-    "apiVersion": "2.0",
+    "apiVersion": "1.0",
     "operations": [
         {
-            "opName": "GraphTopologySet",
+            "opName": "pipelineTopologySet",
             "opParams": {
                 "topologyFile": "<PATH_TO_grpcExtension.json>"
             }
         },
         {
-            "opName": "GraphInstanceSet",
+            "opName": "livePipelineSet",
             "opParams": {
                 "name": "SampleGraph1",
                 "properties": {
@@ -137,7 +137,7 @@ To test the docker container you will need to create a graph topology with gRPC 
             }
         },
         {
-            "opName": "GraphInstanceActivate",
+            "opName": "livePipelineActivate",
             "opParams": {
                 "name": "SampleGraph1"
             }
@@ -145,23 +145,23 @@ To test the docker container you will need to create a graph topology with gRPC 
         {
             "opName": "WaitForInput",
             "opParams": {
-                "message": "The topology will now be deactivated. Press Enter to continue"
+                "message": "The pipelineTopology will now be deactivated. Press Enter to continue"
             }
         },
         {
-            "opName": "GraphInstanceDeactivate",
+            "opName": "livePipelineDeactivate",
             "opParams": {
                 "name": "SampleGraph1"
             }
         },
         {
-            "opName": "GraphInstanceDelete",
+            "opName": "livePipelineDelete",
             "opParams": {
                 "name": "SampleGraph1"
             }
         },
         {
-            "opName": "GraphTopologyDelete",
+            "opName": "pipelineTopologyDelete",
             "opParams": {
                 "name": "InferencingWithGrpcExtension"
             }
@@ -169,22 +169,22 @@ To test the docker container you will need to create a graph topology with gRPC 
     ]
 }
 ```
-### Download the sample video used in the topology:
+### Download the sample video used in the pipelineTopology:
 Log into the IoT Edge device, change to the directory: **/home/avaedgeuser/samples/input/** and run the following command:
 
 ```bash
 wget https://lvamedia.blob.core.windows.net/public/co-final.mkv
 ```
 
-To run the topology, follow [these instructions](https://docs.microsoft.com/en-us/azure/media-services/live-video-analytics-edge/detect-motion-emit-events-quickstart?pivots=programming-language-csharp#run-the-sample-program). As this sample uses a different topology than the one mentioned in the instructions, please follow the next steps to point to the correct topology:
+To run the pipelineTopology, follow [these instructions](https://docs.microsoft.com/en-us/azure/media-services/live-video-analytics-edge/detect-motion-emit-events-quickstart?pivots=programming-language-csharp#run-the-sample-program). As this sample uses a different pipelineTopology than the one mentioned in the instructions, please follow the next steps to point to the correct pipelineTopology:
 
 ### Edit the **operations.json** file:
 
-1. Change the link to the graph topology:
-**"topologyFile"** : "path to the grpcExtension.json file"
-2. Under **GraphInstanceSet**, edit the name of the graph topology to match the value in the preceding link:
+1. Change the link to the pipelineTopology:
+**"pipelineTopologyFile"** : "path to the grpcExtension.json file"
+2. Under **livePipelineSet**, edit the name of the pipelineTopology to match the value in the preceding link:
 "topologyName" : "InferencingWithGrpcExtension"
-3. Under **GraphTopologyDelete**, edit the name:
+3. Under **pipelineTopologyDelete**, edit the name:
 "name" : "InferencingWithGrpcExtension"
 
 
@@ -267,7 +267,7 @@ GST_CONFIG_FILE=inference.txt
 ```
 
 2. Redeploy to the Azure IoT Edge Device
-3. Run the topology
+3. Run the pipelineTopology
 
 In the above pipeline we are using a configuration that performs vehicle detection. This model was specified in inference.txt configuration file (found in **config** directory).
 
@@ -386,7 +386,7 @@ GST_CLASSIFICATION_FILES=car_color.txt,car_type.txt
 ```
 
 2. Redeploy to the Azure IoT Edge Device
-3. Run the topology
+3. Run the pipelineTopology
 
 In the above pipeline we are using a configuration that performs vehicle detection and classification. The models used are specified in the inference.txt, car_color.txt and car_type.txt configuration files (found in **config** directory). When classification is enabled, a new attribute named **attributes** will be added to output containing a list of classification properties detected.
 
@@ -516,7 +516,7 @@ GST_TRACKER_FILE=tracker.txt
 ```
 
 2. Redeploy to the Azure IoT Edge Device
-3. Run the topology
+3. Run the pipelineTopology
 
 In the above pipeline we are using a configuration that performs vehicle detection, classification and tracking. The models used are specified in the inference.txt, car_color.txt and car_type.txt configuration files for classification, and tracker.txt for tracking (found in **config** directory). When tracking is enabled, a new attribute named **id** will be added to output which will be assigned to each tracked object.
 
