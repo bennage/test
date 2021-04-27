@@ -2,7 +2,7 @@ FROM nvcr.io/nvidia/deepstream:5.1-21.02-samples
 
 USER root
 
-# Copy LVA extension specific files
+# Copy AVA extension specific files
 RUN mkdir /app
 COPY ./app/*.py /app/
 COPY ./app/grpc-autogen/*.py /app/
@@ -16,7 +16,7 @@ RUN apt-get update -y && \
     apt-get install -y --no-install-recommends libgstreamer1.0-dev && \
     apt-get install -y python3-pip
 
-# Build LVA GST library
+# Build AVA GST library
 RUN mkdir -p /app/build && \
     cd /app/build && \
     cmake .. && \
@@ -60,7 +60,7 @@ RUN mkdir /var/runit && \
 EXPOSE 80
 EXPOSE 5001
 
-# Starts the LVA gRPC extension server
+# Starts the AVA gRPC extension server
 WORKDIR /app
 COPY ./app/start.sh /app
 RUN chmod +x /app/start.sh

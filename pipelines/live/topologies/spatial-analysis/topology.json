@@ -136,7 +136,7 @@
           "description": "Sample video using spatial analysis",
           "segmentLength": "PT30S"
         },
-        "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
+        "localMediaCachePath": "/var/lib/videoanalyzer/tmp/",
         "localMediaCacheMaximumSizeMiB": "2048"
       },
       {
