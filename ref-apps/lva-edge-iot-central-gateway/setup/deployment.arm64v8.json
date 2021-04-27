@@ -29,7 +29,7 @@
           }
         },
         "modules": {
-          "AvaEdgeGatewayModule": {
+          "avaedgegatewaymodule": {
             "settings": {
               "image": "mcr.microsoft.com/lva-utilities/lva-edge-iotc-gateway:1.0-arm64v8",
               "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"9070/tcp\":[{\"HostPort\":\"9070\"}]},\"Binds\":[\"/data/storage:/data/storage\",\"/data/media:/data/media/\"]}}"
@@ -71,7 +71,7 @@
             "restartPolicy": "always",
             "version": "1.0"
           },
-          "avaYolov3": {
+          "avayolov3": {
             "settings": {
               "image": "mcr.microsoft.com/lva-utilities/yolov3-onnx:1.0"
             },
@@ -102,18 +102,18 @@
       "properties.desired": {
         "schemaVersion": "1.0",
         "routes": {
-          "AvaSignalGateTrigger": "FROM /messages/modules/AvaEdgeGatewayModule/outputs/avaTrigger INTO BrokeredEndpoint(\"/modules/avaedge/inputs/avaTrigger\")",
-          "AvaDiagnosticsForwarder": "FROM /messages/modules/avaedge/outputs/AmsDiagnostics INTO BrokeredEndpoint(\"/modules/AvaEdgeGatewayModule/inputs/avaDiagnostics\")",
-          "AvaOperationsForwarder": "FROM /messages/modules/avaedge/outputs/AmsOperational INTO BrokeredEndpoint(\"/modules/AvaEdgeGatewayModule/inputs/avaOperational\")",
-          "AvaTelemetryForwarder": "FROM /messages/modules/avaedge/outputs/avaTelemetry INTO BrokeredEndpoint(\"/modules/AvaEdgeGatewayModule/inputs/avaTelemetry\")",
-          "AvaEdgeGatewayModuleOutput": "FROM /messages/modules/AvaEdgeGatewayModule/outputs/iotc INTO $upstream"
+          "avasignalgatetrigger": "FROM /messages/modules/avaedgegatewaymodule/outputs/avaTrigger INTO BrokeredEndpoint(\"/modules/avaedge/inputs/avaTrigger\")",
+          "avadiagnosticsforwarder": "FROM /messages/modules/avaedge/outputs/AmsDiagnostics INTO BrokeredEndpoint(\"/modules/avaedgegatewaymodule/inputs/avaDiagnostics\")",
+          "avaoperationsforwarder": "FROM /messages/modules/avaedge/outputs/AmsOperational INTO BrokeredEndpoint(\"/modules/avaedgegatewaymodule/inputs/avaOperational\")",
+          "avatelemetryforwarder": "FROM /messages/modules/avaedge/outputs/avaTelemetry INTO BrokeredEndpoint(\"/modules/avaedgegatewaymodule/inputs/avaTelemetry\")",
+          "avaedgegatewaymoduleoutput": "FROM /messages/modules/avaedgegatewaymodule/outputs/iotc INTO $upstream"
         },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
         }
       }
     },
-    "AvaEdgeGatewayModule": {
+    "avaedgegatewaymodule": {
       "properties.desired": {
         "wpDebugTelemetry": false,
         "wpDebugRoutedMessage": false
