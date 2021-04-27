@@ -141,7 +141,7 @@
           "description": "Sample video using HTTP extension",
           "segmentLength": "PT30S"
         },
-        "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
+        "localMediaCachePath": "/var/lib/videoanalyzer/tmp/",
         "localMediaCacheMaximumSizeMiB": "2048"
       }
     ]

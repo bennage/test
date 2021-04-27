@@ -61,7 +61,7 @@
           "description": "Sample video using audio video",
           "segmentLength": "PT30S"
         },
-        "localMediaCachePath": "/var/lib/azuremediaservices/tmp/",
+        "localMediaCachePath": "/var/lib/videoanalyzer/tmp/",
         "localMediaCacheMaximumSizeMiB": "2048"
       }
     ]

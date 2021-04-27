@@ -1,6 +1,6 @@
-# Live video analytics (LVA) with NVIDIA DeepStream
+# Azure Video Analyzer (AVA) with NVIDIA DeepStream
 
-The following instructions will enable you to build a Docker container with a [gRPC](https://grpc.io/) server that can receive messages from LVA on IoT Edge module, and use a [GStreamer](https://gstreamer.freedesktop.org/) pipeline with video analytics plugins from [NVIDIA DeepStream](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html) (licensed under MIT license).
+The following instructions will enable you to build a Docker container with a [gRPC](https://grpc.io/) server that can receive messages from AVA on IoT Edge module, and use a [GStreamer](https://gstreamer.freedesktop.org/) pipeline with video analytics plugins from [NVIDIA DeepStream](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html) (licensed under MIT license).
 
 ![Image](./images/topology_nvidia_deepstream.png)
 
@@ -22,7 +22,7 @@ Additional open source technologies included are [nginx](https://www.nginx.com/)
 Build the container image (should take some minutes) by running the following Docker command from the same directory as this readme file.
 
 ```bash
-docker build -f ./docker/Dockerfile -t lva-gst-deepstream:latest .
+docker build -f ./docker/Dockerfile -t ava-gst-deepstream:latest .
 ```
 
 ## Push image to a container registry
@@ -32,7 +32,7 @@ Follow instruction on the `/utilities/video-analysis/readme.md`, in the section 
 ## Getting Started
 1. Follow the instructions for [setting up the required Azure resources](https://docs.microsoft.com/en-us/azure/media-services/live-video-analytics-edge/detect-motion-emit-events-quickstart?pivots=programming-language-csharp#set-up-azure-resources). 
 
-2. Create an Azure GPU optimized VM: The [LVA resources setup script](https://github.com/Azure/live-video-analytics/tree/master/edge/setup) creates, by default, an Azure CPU optimized VM but you must create a GPU accelerated VM. NVIDIA® DeepStream Software Development Kit (SDK) runs on NVIDIA® T4. If you don't have a physical IoT Edge device, you can [create an Azure virtual machine](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal) and configure it properly. We recommend creating a [NCasT4_v3-series](https://docs.microsoft.com/en-us/azure/virtual-machines/nct4-v3-series) size VM which are powered by NVIDIA T4 GPUS. Follow the intructions for setting up the environment. You will need a development PC and also an IoT Edge device to run LVA and LVA extension container.
+2. Create an Azure GPU optimized VM: The [AVA resources setup script](https://github.com/Azure/live-video-analytics/tree/master/edge/setup) creates, by default, an Azure CPU optimized VM but you must create a GPU accelerated VM. NVIDIA® DeepStream Software Development Kit (SDK) runs on NVIDIA® T4. If you don't have a physical IoT Edge device, you can [create an Azure virtual machine](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal) and configure it properly. We recommend creating a [NCasT4_v3-series](https://docs.microsoft.com/en-us/azure/virtual-machines/nct4-v3-series) size VM which are powered by NVIDIA T4 GPUS. Follow the intructions for setting up the environment. You will need a development PC and also an IoT Edge device to run AVA and AVA extension container.
 
 3. Install [NVIDIA GPU drivers on Linux N-series VM](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/hpccompute-gpu-linux) on the Azure GPU optimized VM.
 
@@ -75,10 +75,10 @@ sudo docker run --runtime nvidia nvidia/cuda:10.1-base nvidia-smi
 ## Deployment
 Please follow the instructions for [Generating and deploying the deployment manifest](https://docs.microsoft.com/en-us/azure/media-services/live-video-analytics-edge/detect-motion-emit-events-quickstart?pivots=programming-language-csharp#generate-and-deploy-the-deployment-manifest).
 
-To use the container you just built along with LVA, you can use the deployment manifest template **deployment.deepstream.template.json** located in deployment folder in conjunction with either the [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) samples for LVA on IoT Edge. Make sure to replace the image URI placeholder (*<IMAGE_URI>*) of the lvaExtension module with where you uploaded the container image you just built as shown in the excerpt below:
+To use the container you just built along with AVA, you can use the deployment manifest template **deployment.deepstream.template.json** located in deployment folder in conjunction with either the [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) samples for AVA on IoT Edge. Make sure to replace the image URI placeholder (*<IMAGE_URI>*) of the avaExtension module with where you uploaded the container image you just built as shown in the excerpt below:
 
 ```bash
-  "lvaExtension" : {
+  "avaExtension" : {
     "version": "1.0",
     "type": "docker",
     "status": "running",
@@ -94,9 +94,9 @@ To use the container you just built along with LVA, you can use the deployment m
 
 ## Testing
 
-If you look at the lvaExtension module in the deployment manifest you will see that it exposes ports 80 and 5001 mapped to host ports 8080 and 5001 respectively. There are also two environment variables "MJPEG_OUTPUT" and "GST_CONFIG_FILE". MJPEG_OUTPUT means that the container will output a MJPEG stream from the GStreamer pipeline and [GST_CONFIG_FILE](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.html#wwpID0E04DB0HA) defines the DeepStream pipeline.
+If you look at the avaExtension module in the deployment manifest you will see that it exposes ports 80 and 5001 mapped to host ports 8080 and 5001 respectively. There are also two environment variables "MJPEG_OUTPUT" and "GST_CONFIG_FILE". MJPEG_OUTPUT means that the container will output a MJPEG stream from the GStreamer pipeline and [GST_CONFIG_FILE](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.html#wwpID0E04DB0HA) defines the DeepStream pipeline.
 
-To test the docker container you will need to create a graph topology with gRPC extension or you can use the sample topology named **grpcExtension.json** located in the **topology folder** and then create a graph instance based on that topology. You can do so using LVA on IoT Edge [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) sample code. Use the following JSON for operations.json.
+To test the docker container you will need to create a graph topology with gRPC extension or you can use the sample topology named **grpcExtension.json** located in the **topology folder** and then create a graph instance based on that topology. You can do so using AVA on IoT Edge [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) sample code. Use the following JSON for operations.json.
 
 ```JSON
 {
@@ -130,7 +130,7 @@ To test the docker container you will need to create a graph topology with gRPC 
                         },
                         {
                             "name" : "grpcExtensionAddress",
-                            "value" : "tcp://lvaExtension:5001"
+                            "value" : "tcp://avaExtension:5001"
                         }
                     ]
                 }
@@ -170,7 +170,7 @@ To test the docker container you will need to create a graph topology with gRPC 
 }
 ```
 ### Download the sample video used in the topology:
-Log into the IoT Edge device, change to the directory: **/home/lvaadmin/samples/input/** and run the following command:
+Log into the IoT Edge device, change to the directory: **/home/avaedgeuser/samples/input/** and run the following command:
 
 ```bash
 wget https://lvamedia.blob.core.windows.net/public/co-final.mkv
@@ -190,10 +190,10 @@ To run the topology, follow [these instructions](https://docs.microsoft.com/en-u
 
 ### Monitoring
 
-Run the following command to monitor the logs from the lvaExtension docker container
+Run the following command to monitor the logs from the avaExtension docker container
 
 ```powershell
-docker logs lvaExtension -f
+docker logs avaExtension -f
 ```
 
 ### Visualizing output
@@ -219,10 +219,10 @@ GST_CONFIG_FILE=inference.txt
 ```
 
 #### Steps:
-1. Open the deployment template file and update the **lvaExtension** module, you can change the configuration file to be used by modifying the **GST_CONFIG_FILE**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
+1. Open the deployment template file and update the **avaExtension** module, you can change the configuration file to be used by modifying the **GST_CONFIG_FILE**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
 
 ```json
-  "lvaExtension" : {
+  "avaExtension" : {
     "version": "1.0",
     "type": "docker",
     "status": "running",
@@ -337,10 +337,10 @@ GST_CLASSIFICATION_FILES=car_color.txt,car_type.txt
 ```
 
 #### Steps:
-1. Open the deployment template file and update the **lvaExtension** module, you can change the configuration file to be used by modifying the **GST_CLASSIFICATION_FILES**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
+1. Open the deployment template file and update the **avaExtension** module, you can change the configuration file to be used by modifying the **GST_CLASSIFICATION_FILES**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
 
 ```json
-  "lvaExtension" : {
+  "avaExtension" : {
     "version": "1.0",
     "type": "docker",
     "status": "running",
@@ -466,10 +466,10 @@ GST_TRACKER_FILE=tracker.txt
 ```
 
 #### Steps:
-1. Open the deployment template file and update the **lvaExtension** module, you can change the configuration file to be used by modifying the **GST_TRACKER_FILE**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
+1. Open the deployment template file and update the **avaExtension** module, you can change the configuration file to be used by modifying the **GST_TRACKER_FILE**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
 
 ```json
-  "lvaExtension" : {
+  "avaExtension" : {
     "version": "1.0",
     "type": "docker",
     "status": "running",
