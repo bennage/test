@@ -75,10 +75,10 @@ sudo docker run --runtime nvidia nvidia/cuda:10.1-base nvidia-smi
 ## Deployment
 Please follow the instructions for [Generating and deploying the deployment manifest](https://docs.microsoft.com/en-us/azure/media-services/live-video-analytics-edge/detect-motion-emit-events-quickstart?pivots=programming-language-csharp#generate-and-deploy-the-deployment-manifest).
 
-To use the container you just built along with AVA, you can use the deployment manifest template **deployment.deepstream.template.json** located in deployment folder in conjunction with either the [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) samples for AVA on IoT Edge. Make sure to replace the image URI placeholder (*<IMAGE_URI>*) of the avaExtension module with where you uploaded the container image you just built as shown in the excerpt below:
+To use the container you just built along with AVA, you can use the deployment manifest template **deployment.deepstream.template.json** located in deployment folder in conjunction with either the [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) samples for AVA on IoT Edge. Make sure to replace the image URI placeholder (*<IMAGE_URI>*) of the avaextension module with where you uploaded the container image you just built as shown in the excerpt below:
 
 ```bash
-  "avaExtension" : {
+  "avaextension" : {
     "version": "1.0",
     "type": "docker",
     "status": "running",
@@ -94,7 +94,7 @@ To use the container you just built along with AVA, you can use the deployment m
 
 ## Testing
 
-If you look at the avaExtension module in the deployment manifest you will see that it exposes ports 80 and 5001 mapped to host ports 8080 and 5001 respectively. There are also two environment variables "MJPEG_OUTPUT" and "GST_CONFIG_FILE". MJPEG_OUTPUT means that the container will output a MJPEG stream from the GStreamer pipeline and [GST_CONFIG_FILE](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.html#wwpID0E04DB0HA) defines the DeepStream pipeline.
+If you look at the avaextension module in the deployment manifest you will see that it exposes ports 80 and 5001 mapped to host ports 8080 and 5001 respectively. There are also two environment variables "MJPEG_OUTPUT" and "GST_CONFIG_FILE". MJPEG_OUTPUT means that the container will output a MJPEG stream from the GStreamer pipeline and [GST_CONFIG_FILE](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.html#wwpID0E04DB0HA) defines the DeepStream pipeline.
 
 To test the docker container you will need to create a graph topology with gRPC extension or you can use the sample topology named **grpcExtension.json** located in the **topology folder** and then create a graph instance based on that topology. You can do so using AVA on IoT Edge [C#](https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp) or [Python](https://github.com/Azure-Samples/live-video-analytics-iot-edge-python) sample code. Use the following JSON for operations.json.
 
@@ -130,7 +130,7 @@ To test the docker container you will need to create a graph topology with gRPC 
                         },
                         {
                             "name" : "grpcExtensionAddress",
-                            "value" : "tcp://avaExtension:5001"
+                            "value" : "tcp://avaextension:5001"
                         }
                     ]
                 }
@@ -190,10 +190,10 @@ To run the topology, follow [these instructions](https://docs.microsoft.com/en-u
 
 ### Monitoring
 
-Run the following command to monitor the logs from the avaExtension docker container
+Run the following command to monitor the logs from the avaextension docker container
 
 ```powershell
-docker logs avaExtension -f
+docker logs avaextension -f
 ```
 
 ### Visualizing output
@@ -219,10 +219,10 @@ GST_CONFIG_FILE=inference.txt
 ```
 
 #### Steps:
-1. Open the deployment template file and update the **avaExtension** module, you can change the configuration file to be used by modifying the **GST_CONFIG_FILE**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
+1. Open the deployment template file and update the **avaextension** module, you can change the configuration file to be used by modifying the **GST_CONFIG_FILE**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
 
 ```json
-  "avaExtension" : {
+  "avaextension" : {
     "version": "1.0",
     "type": "docker",
     "status": "running",
@@ -337,10 +337,10 @@ GST_CLASSIFICATION_FILES=car_color.txt,car_type.txt
 ```
 
 #### Steps:
-1. Open the deployment template file and update the **avaExtension** module, you can change the configuration file to be used by modifying the **GST_CLASSIFICATION_FILES**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
+1. Open the deployment template file and update the **avaextension** module, you can change the configuration file to be used by modifying the **GST_CLASSIFICATION_FILES**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
 
 ```json
-  "avaExtension" : {
+  "avaextension" : {
     "version": "1.0",
     "type": "docker",
     "status": "running",
@@ -466,10 +466,10 @@ GST_TRACKER_FILE=tracker.txt
 ```
 
 #### Steps:
-1. Open the deployment template file and update the **avaExtension** module, you can change the configuration file to be used by modifying the **GST_TRACKER_FILE**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
+1. Open the deployment template file and update the **avaextension** module, you can change the configuration file to be used by modifying the **GST_TRACKER_FILE**. Note: if you want to change or use a new configuration file, you must save it under the **config** folder, rebuild the docker image and push the image to the registry container.
 
 ```json
-  "avaExtension" : {
+  "avaextension" : {
     "version": "1.0",
     "type": "docker",
     "status": "running",
