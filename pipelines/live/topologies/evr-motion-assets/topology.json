@@ -95,7 +95,7 @@
       {
         "@type": "#Microsoft.VideoAnalyzer.VideoSink",
         "name": "videoSink",
-        "videoName": "sample-motion",
+        "videoName": "sample-motion-video",
         "inputs": [
           {
             "nodeName": "signalGateProcessor",
