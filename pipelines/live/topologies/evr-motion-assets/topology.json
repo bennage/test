@@ -95,7 +95,7 @@
       {
         "@type": "#Microsoft.VideoAnalyzer.VideoSink",
         "name": "videoSink",
-        "videoName": "sample-motion-assets",
+        "videoName": "sample-motion",
         "inputs": [
           {
             "nodeName": "signalGateProcessor",
@@ -109,8 +109,8 @@
           }
         ],
         "videoCreationProperties": {
-          "title": "sample-motion-assets",
-          "description": "Sample video using motion assets",
+          "title": "sample-motion",
+          "description": "Sample video using motion",
           "segmentLength": "PT30S"
         },
         "localMediaCachePath": "/var/lib/videoanalyzer/tmp/",
