@@ -109,7 +109,7 @@
           }
         ],
         "videoCreationProperties": {
-          "title": "sample-motion",
+          "title": "sample-motion-video",
           "description": "Sample video using motion",
           "segmentLength": "PT30S"
         },
