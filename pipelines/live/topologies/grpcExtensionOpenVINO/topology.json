@@ -125,7 +125,7 @@
       {
         "@type": "#Microsoft.VideoAnalyzer.VideoSink",
         "name": "videoSink",
-        "videoName": "sample-grpc-extension-assets",
+        "videoName": "sample-grpc-extension-video",
         "inputs": [
           {
             "nodeName": "rtspSource",
@@ -139,8 +139,8 @@
           }
         ],
         "videoCreationProperties": {
-          "title": "sample-grpc-extension-assets",
-          "description": "Sample video using gRPC extension assets",
+          "title": "sample-grpc-extension-video",
+          "description": "Sample video using gRPC extension video",
           "segmentLength": "PT30S"
         },
         "localMediaCachePath": "/var/lib/videoanalyzer/tmp/",
