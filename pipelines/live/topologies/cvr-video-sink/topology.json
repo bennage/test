@@ -1,8 +1,8 @@
 {
-  "name": "CVRToAMSAsset",
+  "name": "CVRToVideoSink",
   "@apiVersion": "1.0",
   "properties": {
-    "description": "Continuous video recording to an Azure Media Services Asset",
+    "description": "Continuous video recording to Azure Video Sink",
     "parameters": [
       {
         "name": "rtspUserName",
@@ -41,7 +41,7 @@
       {
         "@type": "#Microsoft.VideoAnalyzer.VideoSink",
         "name": "videoSink",
-        "videoName": "sample-cvr-asset",
+        "videoName": "sample-cvr-video-sink",
         "inputs": [
           {
             "nodeName": "rtspSource",
@@ -55,8 +55,8 @@
           }
         ],
         "videoCreationProperties": {
-          "title": "sample-cvr-asset",
-          "description": "Sample video using CVR asset",
+          "title": "sample-cvr-video-sink",
+          "description": "Sample video using CVR video sink",
           "segmentLength": "PT30S"
         },
         "localMediaCachePath": "/var/lib/videoanalyzer/tmp/",

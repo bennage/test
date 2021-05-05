@@ -1,6 +1,6 @@
 {
   "@apiVersion": "1.0",
-  "name": "EVRToFilesAndAssetsOnMotion",
+  "name": "EVRToFilesAndVideoSinkOnMotion",
   "properties": {
     "description": "Event-based video recording to local files based on motion events",
     "parameters": [
@@ -95,7 +95,7 @@
       {
         "@type": "#Microsoft.VideoAnalyzer.VideoSink",
         "name": "videoSink",
-        "videoName": "sample-motion-assets-files",
+        "videoName": "sample-motion-video-sink-files",
         "inputs": [
           {
             "nodeName": "rtspSource",
@@ -109,8 +109,8 @@
           }
         ],
         "videoCreationProperties": {
-          "title": "sample-motion-assets-files",
-          "description": "Sample video using motion assets files",
+          "title": "sample-motion-video-sink-files",
+          "description": "Sample video using motion video sink and files",
           "segmentLength": "PT30S"
         },
         "localMediaCachePath": "/var/lib/videoanalyzer/tmp/",
