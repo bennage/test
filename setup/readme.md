@@ -18,7 +18,7 @@ The scripts in this folder are used to deploy the Azure Video Analyzer.  This de
 
 ### Deploy the required Video Analyzer resources
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fvideo-analyzer%2Fmain%2Fsetup%2Fstart.deploy.json/createUIDefinitionUri%2Fhttps%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fvideo-analyzer%2Fmain%2Fsetup%2Fform.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbennage%2Ftest%2Fmain%2Fsetup%2Fstart.deploy.json/createUIDefinitionUri%2Fhttps%3A%2F%2Fraw.githubusercontent.com%2Fbennage%2Ftest%2Fmain%2Fsetup%2Fform.json)
 
 After the script finishes you will have the following Azure resources:
 
